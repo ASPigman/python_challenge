@@ -13,6 +13,7 @@
 #       -Is there a fin max function? Maybe using a loop like the VBA challenge?
 # - The greatest decrease in profits (date and amount) over the entire period
 #       - Is there a min function?
+# ---------------------------------------------------------------------------------
 # Your final script should both print the analysis to the terminal and export a text file with the results.
 
 # Modules
