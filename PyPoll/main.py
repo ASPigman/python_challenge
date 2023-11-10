@@ -7,3 +7,27 @@
 #  - The total number of votes each candidate won
 #  - The winner of the election based on popular vote
 # Your final script should both print the analysis to the terminal and export a text file with the results.
+
+# Modules
+import os
+import csv
+
+# set path for file
+csvpath = os.path.join("Resources", "election_data.csv")
+
+#Opening the csv file
+with open(csvpath, encoding='UTF-8') as csvfile:
+
+    #This splits each item by the comma
+    csvreader = csv.reader(csvfile, delimiter=",")
+
+    # Read the header row first - skip if no header!
+    csv_header = next(csvreader)
+
+    # Calculate # of months by counting rows
+    votes = sum(1 for row in csvreader)
+    print("Election Analysis")
+    print("----------------------------")
+    print(f"Months: {votes}")
+
+    
