@@ -19,6 +19,7 @@
 # Modules
 import os
 import csv
+import math
 
 # set path for file
 csvpath = os.path.join("Resources", "budget_data.csv")
@@ -31,10 +32,12 @@ with open(csvpath, 'r') as csvfile:
 
     # Read the header row first - skip if no header!
     csv_header = next(csvreader)
+    
     # retain the header by 
     # print(f"Header: {csv_header}")
 
-    date = []
+    dates = []
+    profits_losses = []
 
     # An attempt at using list.count() to calculate number of months (not working)
     # for row in csvreader:
@@ -44,7 +47,25 @@ with open(csvpath, 'r') as csvfile:
         #list.count(date)
 
     # Calculate # of months by counting rows (this works)
-    #months = sum(1 for row in csvreader)
-    #print("Financial Analysis")
-    #print("----------------------------")
-    #print(f"Months: {months}")
+    # credit to: https://stackoverflow.com/questions/52675187/getting-python-to-answer-the-total-net-amount-of-profit-losses-over-the-entir
+    # For the 4 lines below
+    months = sum(1 for row in csvreader)
+    print("Financial Analysis")
+    print("----------------------------")
+    print(f"Months: {months}")
+
+    for row in csvreader:
+        profits_losses.append(row[1])
+
+        #Sum the values from column 2 however the output is a big list - need to just show the last value, but how?
+        #def total_money(profits_losses):
+            #total = 0
+            #for money in profits_losses:
+                #total += int(money)
+            #return total
+        
+        #total_money(profits_losses)
+
+        sum_prof_loss = sum(int(profits_losses))
+        print(sum_prof_loss)
+
