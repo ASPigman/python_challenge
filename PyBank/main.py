@@ -19,10 +19,14 @@
 # Modules
 import os
 import csv
-import math
 
 # set path for file
 csvpath = os.path.join("Resources", "budget_data.csv")
+
+# creating empty lists to append
+months = []
+profits_losses = []
+changes = []
 
 # Opening the csv file
 with open(csvpath, 'r') as csvfile:
@@ -32,40 +36,56 @@ with open(csvpath, 'r') as csvfile:
 
     # Read the header row first - skip if no header!
     csv_header = next(csvreader)
+
+    # Setting the line count variable to integer 0 so we can count number of months.
+    line_count = 0
     
-    # retain the header by 
-    # print(f"Header: {csv_header}")
-
-    dates = []
-    profits_losses = []
-
-    # An attempt at using list.count() to calculate number of months (not working)
-    # for row in csvreader:
-
-        #date.append(row[0])
-
-        #list.count(date)
-
-    # Calculate # of months by counting rows (this works)
-    # credit to: https://stackoverflow.com/questions/52675187/getting-python-to-answer-the-total-net-amount-of-profit-losses-over-the-entir
-    # For the 4 lines below
-    months = sum(1 for row in csvreader)
-    print("Financial Analysis")
-    print("----------------------------")
-    print(f"Months: {months}")
-
+    # Calculating the number of months
     for row in csvreader:
-        profits_losses.append(row[1])
+        months.append(row[0])
+        profits_losses.append(int(row[1]))
 
-        #Sum the values from column 2 however the output is a big list - need to just show the last value, but how?
-        #def total_money(profits_losses):
-            #total = 0
-            #for money in profits_losses:
-                #total += int(money)
-            #return total
+        if line_count == 0:
+            line_count += 1
+        else:
+            line_count += 1
+print(" ")
+print("Financial Analysis")
+print("-----------------------------------")
+print(f'Total Months: {line_count}')
+print(" ")
+
+# Calculating the net change over the number of months.
+def csv_total(something):
+    total = 0
+    with open(something) as a:
+        csvreader = csv.reader(a)
+        csv_header = next(csvreader)
+
+        for line in csvreader:
+            total += int(line[1])
+            
+    return total
+total = csv_total(csvpath)
+print(f"Total: $ {total}")
+print(" ")
+
+    
+# Calculating the average change over time and identifying the amounts and dates of greatest increases and decreases in profits.
+for i in range (1, len(months)):
+        change = profits_losses[i]-profits_losses[i-1]
+        changes.append(change)
         
-        #total_money(profits_losses)
+        average_change = sum(changes)/len(changes)
+        increase = max(changes)
+        increase_date = months[changes.index(increase) + 1]
+        decrease = min(changes)
+        decrease_date = months[changes.index(decrease) + 1]
 
-        sum_prof_loss = sum(int(profits_losses))
-        print(sum_prof_loss)
-
+# the :.2f allows for two decimal places
+print(f"Average Change: $ {average_change:.2f}")
+print(" ")
+print(f"Greatest increase in Profits: $ {increase} on {increase_date}")
+print(" ")
+print(f"Greatest decrease in Profits: $ {decrease} on {decrease_date}")
+print(" ")
