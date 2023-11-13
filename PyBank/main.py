@@ -1,21 +1,3 @@
-#  I would like the code to be as reusable as possible!
-
-#In this Challenge, you are tasked with creating a Python script to analyze the financial records of your company. 
-# You will be given a financial dataset called budget_data.csv. The dataset is composed of two columns: "Date" and "Profit/Losses".
-# Your task is to create a Python script that analyzes the records to calculate each of the following values:
-# - The total number of months included in the dataset
-#       -Create a variable that counts rows since each represents a different month. Make sure to skip first row!
-# - The net total amount of "Profit/Losses" over the entire period
-#       - Need to subtract first and last or add one row to the next?
-# - The changes in "Profit/Losses" over the entire period, and then the average of those changes
-#       - Average change in profit_loss = (Amount of last row - Amount of first row) / (months - 1)
-# - The greatest increase in profits (date and amount) over the entire period
-#       -Is there a fin max function? Maybe using a loop like the VBA challenge?
-# - The greatest decrease in profits (date and amount) over the entire period
-#       - Is there a min function?
-# ---------------------------------------------------------------------------------
-# Your final script should both print the analysis to the terminal and export a text file with the results.
-
 # Modules
 import os
 import csv
@@ -45,6 +27,7 @@ with open(csvpath, 'r') as csvfile:
         months.append(row[0])
         profits_losses.append(int(row[1]))
 
+        # Using conditional to total the number of lines, starting with the first one on the if line, then adding each additon one with the else.
         if line_count == 0:
             line_count += 1
         else:
@@ -57,11 +40,16 @@ print(" ")
 
 # Calculating the net change over the number of months.
 def csv_total(something):
+    
+    # setting the total variable to 0
     total = 0
-    with open(something) as a:
-        csvreader = csv.reader(a)
-        csv_header = next(csvreader)
+    with open(something) as word:
 
+        # making sure we're reading the csv file and skipping header
+        csvreader = csv.reader(word)
+        csv_header = next(csvreader)
+        
+        # looping through the rows to add the values together.
         for line in csvreader:
             total += int(line[1])
             
