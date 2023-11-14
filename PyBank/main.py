@@ -50,8 +50,8 @@ def csv_total(something):
         csv_header = next(csvreader)
         
         # looping through the rows to add the values together.
-        for line in csvreader:
-            total += int(line[1])
+        for row in csvreader:
+            total += int(row[1])
             
     return total
 total = csv_total(csvpath)
